@@ -4,7 +4,7 @@ import { Sparkles, Calendar, Loader2, RefreshCw, Star } from 'lucide-react';
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
-import { Hero } from './components/Hero';
+import { Hero } from './Hero';
 
 export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.WELCOME);
