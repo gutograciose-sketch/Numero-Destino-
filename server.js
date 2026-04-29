@@ -19,20 +19,13 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Serve static files from the dist folder in production
-    const distPath = path.resolve(__dirname, 'dist');
-    const assetsPath = path.resolve(distPath, 'assets');
-    
+    const distPath = path.join(process.cwd(), 'dist');
     console.log('Serving production assets from:', distPath);
-    console.log('Serving explicit assets from:', assetsPath);
     
-    // Explicitly serve assets folder
-    app.use('/assets', express.static(assetsPath));
-    
-    // Serve the rest of dist
     app.use(express.static(distPath));
     
     app.get('*', (req, res) => {
-      res.sendFile(path.resolve(distPath, 'index.html'));
+      res.sendFile(path.join(distPath, 'index.html'));
     });
   }
 

@@ -4,6 +4,7 @@ import { Sparkles, Calendar, ArrowRight, Loader2, RefreshCw, Star, ShieldCheck }
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
+import mentorImg from './mentor.png';
 
 export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.WELCOME);
@@ -43,7 +44,7 @@ export default function App() {
       <div className="fixed inset-0 z-0 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-[0.25] transition-opacity duration-1000 scale-105"
-          style={{ backgroundImage: "url('/assets/mentor.png')" }}
+          style={{ backgroundImage: `url(${mentorImg})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/60 to-[#050505]" />
         
@@ -131,7 +132,7 @@ export default function App() {
                     <div className="relative h-full w-full bg-zinc-900/80 rounded-[4rem] overflow-hidden border border-amber-500/40 backdrop-blur-md group shadow-2xl">
                       <div 
                         className="absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-                        style={{ backgroundImage: "url('/assets/mentor.png')" }} 
+                        style={{ backgroundImage: `url(${mentorImg})` }} 
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/20 opacity-90" />
                       <div className="absolute bottom-12 left-0 right-0 text-center">
