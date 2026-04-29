@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
-import mentorImg from '../assets/mentor.png';
 
 interface HeroProps {
   onStart: () => void;
@@ -57,7 +56,7 @@ export function Hero({ onStart }: HeroProps) {
             <div className="absolute inset-0 border-[1px] border-amber-500/10 rounded-[3.5rem] -rotate-[4deg] scale-105" />
             <div className="relative h-full w-full bg-zinc-900/80 rounded-[4rem] overflow-hidden border border-amber-500/40 backdrop-blur-md group shadow-2xl">
               <img 
-                src={mentorImg}
+                src="/mentor.png"
                 alt="Mentor"
                 className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
               />
