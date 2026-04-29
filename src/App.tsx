@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Calendar, Loader2, RefreshCw, Star } from 'lucide-react';
+import { Sparkles, Calendar, Loader2, RefreshCw, Star, ArrowRight } from 'lucide-react';
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
-import { Hero } from './Hero';
 
 export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.WELCOME);
@@ -77,9 +76,34 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              className="w-full"
+              className="w-full flex flex-col items-center justify-center text-center space-y-12 pt-12 md:pt-24"
             >
-              <Hero onStart={handleStart} />
+              <div className="space-y-6 md:space-y-8">
+                <div className="flex items-center justify-center gap-4 animate-in fade-in slide-in-from-left-4 duration-700">
+                  <div className="h-px w-8 md:w-12 bg-amber-500" />
+                  <span className="text-amber-500 font-black text-[9px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase text-nowrap">Fernando Liberal</span>
+                </div>
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[0.9] md:leading-[0.85] drop-shadow-2xl">
+                  Sua Alma é<br />
+                  <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-500 to-amber-200 pb-2 md:pb-4">
+                    Frequência.
+                  </span>
+                </h1>
+                <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-lg mx-auto font-medium">
+                  O universo não joga dados. Ele calcula. Descubra o código matemático que rege o seu destino e a missão secreta da sua alma.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-4 md:pt-8 w-full max-w-md mx-auto">
+                <button
+                  id="btn-start"
+                  onClick={handleStart}
+                  className="w-full h-16 md:h-18 bg-white hover:bg-zinc-100 text-black font-black text-lg md:text-xl rounded-2xl transition-all flex items-center justify-center gap-4 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.15)] group"
+                >
+                  Iniciar Alinhamento
+                  <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" />
+                </button>
+              </div>
             </motion.div>
           )}
 
