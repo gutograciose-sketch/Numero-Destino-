@@ -64,14 +64,14 @@ export default function App() {
         </div>
       </div>
 
-      <header className="fixed top-8 left-0 right-0 z-40 px-6 max-w-7xl mx-auto flex justify-between items-center pointer-events-none">
-        <div className="flex items-center gap-2 opacity-80">
-          <Star className="text-amber-500 w-4 h-4 fill-amber-500" />
-          <span className="text-[10px] font-black tracking-[0.4em] uppercase text-amber-500">Portal Magnetico</span>
+      <header className="fixed top-4 md:top-8 left-0 right-0 z-40 px-6 max-w-7xl mx-auto flex justify-between items-center pointer-events-none">
+        <div className="flex items-center gap-2 opacity-80 backdrop-blur-sm bg-[#050505]/20 px-3 py-1 rounded-full">
+          <Star className="text-amber-500 w-3 md:h-3 md:w-4 h-3 md:h-4 fill-amber-500" />
+          <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] md:tracking-[0.4em] uppercase text-amber-500">Portal Magnetico</span>
         </div>
       </header>
 
-      <main className={`relative z-10 mx-auto px-6 pt-32 pb-12 min-h-screen flex flex-col items-center transition-all duration-700 ${step === QuizStep.WELCOME ? 'max-w-6xl' : 'max-w-lg'}`}>
+      <main className={`relative z-10 mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12 min-h-screen flex flex-col items-center transition-all duration-700 ${step === QuizStep.WELCOME ? 'max-w-6xl' : 'max-w-lg'}`}>
         <AnimatePresence mode="wait">
           {step === QuizStep.WELCOME && (
             <motion.div
@@ -81,40 +81,39 @@ export default function App() {
               exit={{ opacity: 0, scale: 0.98 }}
               className="w-full flex flex-col items-center justify-center py-12"
             >
-              <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-20 items-center w-full">
-                <div className="space-y-12 text-left">
+              <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-center w-full">
+                <div className="space-y-8 md:space-y-12 text-center lg:text-left">
                   <motion.div 
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="flex items-center gap-4"
+                    className="flex items-center justify-center lg:justify-start gap-4"
                   >
-                    <div className="h-px w-12 bg-amber-500" />
-                    <span className="text-amber-500 font-black text-[11px] tracking-[0.5em] uppercase">Fernando Liberal</span>
+                    <div className="h-px w-8 md:w-12 bg-amber-500" />
+                    <span className="text-amber-500 font-black text-[9px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase text-nowrap">Fernando Liberal</span>
                   </motion.div>
 
-                  <div className="space-y-8">
-                    <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-[0.85] drop-shadow-2xl">
+                  <div className="space-y-6 md:space-y-8">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[0.9] md:leading-[0.85] drop-shadow-2xl">
                       Sua Alma é<br />
-                      <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-500 to-amber-200 pb-4">
+                      <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-500 to-amber-200 pb-2 md:pb-4">
                         Frequência.
                       </span>
                     </h1>
-                    <p className="text-zinc-400 text-xl leading-relaxed max-w-lg font-medium">
+                    <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0 font-medium">
                       O universo não joga dados. Ele calcula. Descubra o código matemático que rege o seu destino e a missão secreta da sua alma.
                     </p>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-12 pt-8">
+                  <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-8 pt-4 md:pt-8">
                     <button
                       id="btn-start"
                       onClick={handleStart}
-                      className="h-18 px-14 bg-white hover:bg-zinc-100 text-black font-black text-xl rounded-2xl transition-all flex items-center justify-center gap-4 active:scale-95 shadow-[0_25px_60px_rgba(255,255,255,0.15)] group"
+                      className="w-full sm:w-auto h-16 md:h-18 px-10 md:px-14 bg-white hover:bg-zinc-100 text-black font-black text-lg md:text-xl rounded-2xl transition-all flex items-center justify-center gap-4 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.15)] group"
                     >
                       Iniciar Alinhamento
-                      <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" />
                     </button>
-
                   </div>
                 </div>
 
@@ -147,7 +146,7 @@ export default function App() {
               </div>
 
               {/* Enhanced Benefits Bar */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-16 w-full pt-40 pb-12 border-t border-zinc-900/50">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 w-full pt-24 md:pt-40 pb-12 border-t border-zinc-900/50">
                 {[
                   { label: "Precisão", text: "Cálculo Pitagórico Ancestral", icon: Star },
                   { label: "Profundidade", text: "Dualidade de Luz e Sombra", icon: Sparkles },
@@ -192,13 +191,14 @@ export default function App() {
                   <input
                     id="birthdate-input"
                     type="text"
+                    inputMode="numeric"
                     placeholder="DD/MM/AAAA"
                     value={birthDate}
                     onChange={(e) => {
                       const val = e.target.value.replace(/\D/g, '');
                       if (val.length <= 8) setBirthDate(val);
                     }}
-                    className="w-full bg-zinc-900/40 border-2 border-zinc-800/50 focus:border-amber-500/50 rounded-3xl py-8 pl-18 pr-6 text-3xl font-black text-white placeholder:text-zinc-800 focus:outline-none transition-all backdrop-blur-md"
+                    className="w-full bg-zinc-900/40 border-2 border-zinc-800/50 focus:border-amber-500/50 rounded-2xl md:rounded-3xl py-6 md:py-8 pl-14 md:pl-18 pr-6 text-xl md:text-3xl font-black text-white placeholder:text-zinc-800 focus:outline-none transition-all backdrop-blur-md"
                   />
                   {birthDate.length > 0 && (
                     <div className="absolute right-6 top-1/2 -translate-y-1/2 flex gap-1">
@@ -268,7 +268,7 @@ export default function App() {
               {/* Tarot Card REFINED */}
               <div id="tarot-card" className="relative group p-1">
                 <div className="absolute -inset-0.5 bg-gradient-to-b from-amber-400 via-amber-600 to-transparent rounded-[2.5rem] opacity-30 blur-sm group-hover:opacity-50 transition-opacity" />
-                <div className="relative bg-[#0d0d0d]/90 border-[1px] border-amber-500/30 rounded-[2.5rem] p-8 md:p-12 space-y-10 overflow-hidden shadow-2xl backdrop-blur-3xl">
+                <div className="relative bg-[#0d0d0d]/90 border-[1px] border-amber-500/30 rounded-[2.5rem] p-6 md:p-12 space-y-8 md:space-y-10 overflow-hidden shadow-2xl backdrop-blur-3xl">
                   {/* Internal Golden Border */}
                   <div className="absolute inset-4 border border-amber-500/10 rounded-[1.8rem] pointer-events-none" />
                   <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-[60px] rounded-full -mr-16 -mt-16" />
@@ -281,7 +281,7 @@ export default function App() {
                       <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-500/20" />
                     </div>
                     <div>
-                      <h3 className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-100 to-amber-600 drop-shadow-[0_5px_15px_rgba(245,158,11,0.2)]">
+                      <h3 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-100 to-amber-600 drop-shadow-[0_5px_15px_rgba(245,158,11,0.2)]">
                         {NUMEROLOGY_DATA[result].title.split(' ')[1]}
                       </h3>
                       <p className="text-amber-500/60 text-[10px] font-bold tracking-[0.3em] uppercase mt-3">Número de Destino</p>
@@ -293,9 +293,9 @@ export default function App() {
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_8px_#f59e0b]" />
-                        <h4 className="text-white text-xs font-black uppercase tracking-widest">Missão de Luz</h4>
+                        <h4 className="text-white text-[10px] md:text-xs font-black uppercase tracking-widest">Missão de Luz</h4>
                       </div>
-                      <p className="text-xl text-zinc-100 leading-relaxed font-semibold">
+                      <p className="text-lg md:text-xl text-zinc-100 leading-relaxed font-semibold">
                         {NUMEROLOGY_DATA[result].mission}
                       </p>
                     </div>
@@ -303,9 +303,9 @@ export default function App() {
                     <div className="space-y-4 border-t border-zinc-800/50 pt-8">
                       <div className="flex items-center gap-3">
                         <div className="w-3 h-3 border border-zinc-700 rounded-sm rotate-45" />
-                        <h4 className="text-zinc-500 text-xs font-black uppercase tracking-widest">Sombra Evolutiva</h4>
+                        <h4 className="text-zinc-500 text-[10px] md:text-xs font-black uppercase tracking-widest">Sombra Evolutiva</h4>
                       </div>
-                      <p className="text-base text-zinc-400 leading-relaxed italic">
+                      <p className="text-sm md:text-base text-zinc-400 leading-relaxed italic">
                         {NUMEROLOGY_DATA[result].difficulties}
                       </p>
                     </div>
