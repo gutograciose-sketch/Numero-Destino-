@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { execSync } from "child_process";
 
 // Em ESM, precisamos definir __dirname manualmente
 const __filename = fileURLToPath(import.meta.url);
@@ -15,13 +16,26 @@ async function startServer() {
   const rawNodeEnv = (process.env.NODE_ENV || "").toLowerCase();
   let isProduction = rawNodeEnv.includes("prod") || rawNodeEnv.includes("production");
 
+  const distIndex = path.resolve(process.cwd(), 'dist', 'index.html');
+
   if (!isProduction && rawNodeEnv !== "development") {
     // Na Hostinger, às vezes a variável NODE_ENV não está configurada (vazia).
     // Verificamos se exist o dist/index.html. Se existir, assumimos que é produção.
-    const distIndex = path.resolve(process.cwd(), 'dist', 'index.html');
     if (fs.existsSync(distIndex)) {
       isProduction = true;
       console.log("[AUTO-DETECT] Arquivo dist/index.html encontrado. Assumindo modo PRODUÇÃO (Hostinger).");
+    }
+  }
+
+  // Se estivermos na Hostinger (ou forçado produção) e a pasta dist ainda não existir:
+  if (!fs.existsSync(distIndex) && (isProduction || rawNodeEnv === "")) {
+    console.log("[AUTO-BUILD] Arquivo dist/index.html não encontrado! Executando o build do Vite automaticamente antes de iniciar o servidor...");
+    try {
+      execSync("npm run build", { stdio: "inherit" });
+      console.log("[AUTO-BUILD] Build concluído com sucesso.");
+      isProduction = true; // Agora temos os arquivos estáticos, podemos servir como produção
+    } catch (err) {
+      console.error("[AUTO-BUILD] Erro ao tentar rodar o build:", err);
     }
   }
 
