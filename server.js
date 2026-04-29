@@ -22,13 +22,18 @@ async function startServer() {
     const distPath = path.resolve(__dirname, 'dist');
     const assetsPath = path.resolve(distPath, 'assets');
     
-    console.log('Serving production assets from:', distPath);
-    console.log('Serving explicit assets from:', assetsPath);
+    console.log('--- Production Config ---');
+    console.log('Dirname:', __dirname);
+    console.log('Dist Path:', distPath);
+    console.log('Assets Path:', assetsPath);
     
-    // Explicitly serve assets folder as requested by Hostinger support example
-    app.use('/assets', express.static(assetsPath));
+    // Serve assets with a cache-control headers for better performance
+    app.use('/assets', express.static(assetsPath, {
+      maxAge: '1y',
+      immutable: true
+    }));
     
-    // Serve the rest of dist
+    // Serve the rest of the static files
     app.use(express.static(distPath));
     
     app.get('*', (req, res) => {
