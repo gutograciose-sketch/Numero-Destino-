@@ -19,10 +19,11 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Serve static files from the dist folder in production
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = path.resolve(__dirname, 'dist');
+    console.log('Serving production assets from:', distPath);
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      res.sendFile(path.resolve(distPath, 'index.html'));
     });
   }
 
