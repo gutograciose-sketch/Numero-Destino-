@@ -7,6 +7,7 @@ export interface NumerologyInfo {
 export type NumerologyData = Record<number, NumerologyInfo>;
 
 export enum QuizStep {
+  SPLASH = 'SPLASH',
   INPUT = 'INPUT',
   LOADING = 'LOADING',
   RESULT = 'RESULT'

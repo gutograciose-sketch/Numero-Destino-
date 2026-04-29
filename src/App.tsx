@@ -6,7 +6,7 @@ import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
 
 export default function App() {
-  const [step, setStep] = useState<QuizStep>(QuizStep.INPUT);
+  const [step, setStep] = useState<QuizStep>(QuizStep.SPLASH);
   const [birthDate, setBirthDate] = useState('');
   const [result, setResult] = useState<number | null>(null);
 
@@ -29,6 +29,7 @@ export default function App() {
   };
 
   const progress = {
+    [QuizStep.SPLASH]: 0,
     [QuizStep.INPUT]: 33,
     [QuizStep.LOADING]: 66,
     [QuizStep.RESULT]: 100,
@@ -67,6 +68,43 @@ export default function App() {
 
       <main className={`relative z-10 mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12 min-h-screen flex flex-col items-center transition-all duration-700 max-w-lg`}>
         <AnimatePresence mode="wait">
+          {step === QuizStep.SPLASH && (
+            <motion.div
+              key="splash"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full space-y-8 flex flex-col items-center pt-4"
+            >
+              <div className="relative w-full max-w-sm aspect-[3/4] rounded-[2.5rem] overflow-hidden border border-amber-500/20 shadow-2xl">
+                <img 
+                  src="/welcome.jpg" 
+                  alt="Mentor" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-transparent" />
+              </div>
+
+              <div className="text-center space-y-3 px-4">
+                <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                  Descubra o Poder dos Seus Números
+                </h1>
+                <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
+                  Conecte-se com a sabedoria ancestral da numerologia e desvende o caminho da sua alma.
+                </p>
+              </div>
+
+              <button
+                id="btn-start"
+                onClick={() => setStep(QuizStep.INPUT)}
+                className="w-full h-16 bg-gradient-to-r from-amber-500 to-amber-700 text-white font-black text-xl rounded-[2rem] transition-all flex items-center justify-center gap-3 shadow-2xl active:scale-95 group overflow-hidden relative"
+              >
+                <span className="relative z-10">Iniciar Jornada</span>
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </button>
+            </motion.div>
+          )}
+
           {step === QuizStep.INPUT && (
             <motion.div
               key="input"
