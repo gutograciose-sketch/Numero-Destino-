@@ -4,7 +4,6 @@ import { Sparkles, Calendar, Loader2, RefreshCw, Star, ArrowRight } from 'lucide
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
-import mentorImg from './assets/media.jpg';
 
 export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.WELCOME);
@@ -117,7 +116,7 @@ export default function App() {
                     <div className="absolute inset-0 border-[1px] border-amber-500/10 rounded-[3.5rem] -rotate-[4deg] scale-105" />
                     <div className="relative h-full w-full bg-zinc-900/80 rounded-[4rem] overflow-hidden border border-amber-500/40 backdrop-blur-md group shadow-2xl">
                       <img 
-                        src={mentorImg}
+                        src="/mentor.png"
                         alt="Especialista"
                         className="absolute inset-0 w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                       />
