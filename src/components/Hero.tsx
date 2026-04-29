@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, Star } from 'lucide-react';
+import mentorImg from '../assets/mentor.png';
 
 interface HeroProps {
   onStart: () => void;
@@ -10,15 +10,10 @@ export function Hero({ onStart }: HeroProps) {
     <div className="w-full flex flex-col items-center justify-center py-12">
       <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-center w-full">
         <div className="space-y-8 md:space-y-12 text-center lg:text-left">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-center lg:justify-start gap-4"
-          >
+          <div className="flex items-center justify-center lg:justify-start gap-4 animate-in fade-in slide-in-from-left-4 duration-700">
             <div className="h-px w-8 md:w-12 bg-amber-500" />
             <span className="text-amber-500 font-black text-[9px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase text-nowrap">Fernando Liberal</span>
-          </motion.div>
+          </div>
 
           <div className="space-y-6 md:space-y-8">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[0.9] md:leading-[0.85] drop-shadow-2xl">
@@ -44,19 +39,14 @@ export function Hero({ onStart }: HeroProps) {
           </div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, x: 50 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative hidden lg:block"
-        >
+        <div className="relative hidden lg:block animate-in fade-in slide-in-from-right-8 duration-1000">
           <div className="absolute inset-0 bg-violet-600/10 blur-[150px] rounded-full scale-125 animate-pulse" />
           <div className="relative aspect-[3.5/5] w-full">
             <div className="absolute inset-0 border-[1px] border-amber-500/20 rounded-[3.5rem] rotate-[4deg] scale-100" />
             <div className="absolute inset-0 border-[1px] border-amber-500/10 rounded-[3.5rem] -rotate-[4deg] scale-105" />
             <div className="relative h-full w-full bg-zinc-900/80 rounded-[4rem] overflow-hidden border border-amber-500/40 backdrop-blur-md group shadow-2xl">
               <img 
-                src="/mentor.png"
+                src={mentorImg}
                 alt="Mentor"
                 className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
               />
@@ -69,7 +59,7 @@ export function Hero({ onStart }: HeroProps) {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Enhanced Benefits Bar */}
