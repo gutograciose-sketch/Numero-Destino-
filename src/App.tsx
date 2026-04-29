@@ -4,7 +4,6 @@ import { Sparkles, Calendar, ArrowRight, Loader2, RefreshCw, Star, ShieldCheck }
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
-// import mentorImg from './assets/mentor.png';
 
 export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.WELCOME);
