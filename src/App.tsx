@@ -4,7 +4,7 @@ import { Sparkles, Calendar, Loader2, RefreshCw, Star, ArrowRight } from 'lucide
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
-import mentorImg from './assets/fernando.png';
+import mentorImg from './assets/media.jpg';
 
 export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.WELCOME);
