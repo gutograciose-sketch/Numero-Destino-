@@ -127,9 +127,10 @@ export default function App() {
                     <div className="absolute inset-0 border-[1px] border-amber-500/20 rounded-[3.5rem] rotate-[4deg] scale-100" />
                     <div className="absolute inset-0 border-[1px] border-amber-500/10 rounded-[3.5rem] -rotate-[4deg] scale-105" />
                     <div className="relative h-full w-full bg-zinc-900/80 rounded-[4rem] overflow-hidden border border-amber-500/40 backdrop-blur-md group shadow-2xl">
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-                        style={{ backgroundImage: `url(${mentorImg})` }} 
+                      <img 
+                        src={mentorImg}
+                        alt="Mentor"
+                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/20 opacity-90" />
                       <div className="absolute bottom-12 left-0 right-0 text-center">
