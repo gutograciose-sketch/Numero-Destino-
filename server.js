@@ -13,7 +13,17 @@ async function startServer() {
 
   // Melhora a detecção de produção sendo insensível a maiúsculas/minúsculas e caracteres extras (como o ponto final no print)
   const rawNodeEnv = (process.env.NODE_ENV || "").toLowerCase();
-  const isProduction = rawNodeEnv.includes("prod") || rawNodeEnv.includes("production");
+  let isProduction = rawNodeEnv.includes("prod") || rawNodeEnv.includes("production");
+
+  if (!isProduction && rawNodeEnv !== "development") {
+    // Na Hostinger, às vezes a variável NODE_ENV não está configurada (vazia).
+    // Verificamos se exist o dist/index.html. Se existir, assumimos que é produção.
+    const distIndex = path.resolve(process.cwd(), 'dist', 'index.html');
+    if (fs.existsSync(distIndex)) {
+      isProduction = true;
+      console.log("[AUTO-DETECT] Arquivo dist/index.html encontrado. Assumindo modo PRODUÇÃO (Hostinger).");
+    }
+  }
 
   // Middleware para logs (ajuda no debug do Hostinger se o log estiver ativo)
   app.use((req, res, next) => {
