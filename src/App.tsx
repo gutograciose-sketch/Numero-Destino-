@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Calendar, Loader2, RefreshCw, Star } from 'lucide-react';
+import { Sparkles, Calendar, Loader2, RefreshCw, Star, Volume2, VolumeX } from 'lucide-react';
 import { calculateDestinyNumber } from './utils/numerology';
 import { NUMEROLOGY_DATA } from './constants/numerologyData';
 import { QuizStep } from './types';
@@ -9,6 +9,57 @@ export default function App() {
   const [step, setStep] = useState<QuizStep>(QuizStep.SPLASH);
   const [birthDate, setBirthDate] = useState('');
   const [result, setResult] = useState<number | null>(null);
+
+  // Audio States for 528Hz Frequency
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  const [oscillator, setOscillator] = useState<OscillatorNode | null>(null);
+  const [gainNode, setGainNode] = useState<GainNode | null>(null);
+
+  const toggleAudio = () => {
+    if (isPlaying) {
+      if (gainNode && audioContext) {
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.5);
+        setTimeout(() => {
+          oscillator?.stop();
+          setIsPlaying(false);
+        }, 500);
+      }
+    } else {
+      try {
+        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(528, ctx.currentTime);
+        
+        gain.gain.setValueAtTime(0.00001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.03, ctx.currentTime + 1.5);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.start();
+        
+        setAudioContext(ctx);
+        setOscillator(osc);
+        setGainNode(gain);
+        setIsPlaying(true);
+      } catch (e) {
+        console.error("Audio not supported", e);
+      }
+    }
+  };
+
+  const particles = Array.from({ length: 30 }, (_, i) => ({
+    id: i,
+    size: Math.random() * 3 + 1,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    duration: Math.random() * 15 + 15,
+    delay: Math.random() * 5,
+  }));
 
   const handleCalculate = () => {
     if (birthDate.length >= 8) {
@@ -66,42 +117,106 @@ export default function App() {
         </div>
       </header>
 
-      <main className={`relative z-10 mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12 min-h-screen flex flex-col items-center transition-all duration-700 max-w-lg`}>
+      <main className={`relative z-10 ${step === QuizStep.SPLASH ? 'ml-0 mr-auto px-6 md:px-16 items-start max-w-full' : 'mx-auto px-4 md:px-6 items-center max-w-lg'} pt-24 md:pt-32 pb-12 min-h-screen flex flex-col transition-all duration-700 w-full`}>
         <AnimatePresence mode="wait">
           {step === QuizStep.SPLASH && (
             <motion.div
               key="splash"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full space-y-8 flex flex-col items-center pt-4"
+              exit={{ 
+                opacity: 0, 
+                scale: 1.5,
+                filter: "blur(20px)",
+                transition: { duration: 0.8 } 
+              }}
+              className="w-full min-h-[75vh] flex flex-col justify-between items-start py-8 relative z-10"
             >
-              <div className="relative w-full max-w-sm aspect-[3/4] rounded-[2.5rem] overflow-hidden border border-amber-500/20 shadow-2xl">
-                <img 
+              {/* Imagem de Fundo Fullscreen (Técnica Anti-Corte) */}
+              <div className="fixed inset-0 z-0 w-full h-full bg-[#050505]">
+                {/* Camada 1: Imagem Borrada no Fundo (Preenche a tela) */}
+                <motion.img 
+                  src="/welcome.jpg" 
+                  alt="Mentor Background" 
+                  className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-30"
+                  initial={{ scale: 1.2 }}
+                  animate={{ scale: 1.1 }}
+                  transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+                />
+                
+                {/* Camada 2: Imagem Principal (Responsividade Total: preenche a tela sempre) */}
+                <motion.img 
                   src="/welcome.jpg" 
                   alt="Mentor" 
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  initial={{ scale: 1.05 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-transparent" />
+                
+                {/* Camada 3: Overlay Gradiente para legibilidade */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/50 via-transparent to-[#050505]" />
               </div>
 
-              <div className="text-center space-y-3 px-4">
-                <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                  Descubra o Poder dos Seus Números
-                </h1>
-                <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
-                  Conecte-se com a sabedoria ancestral da numerologia e desvende o caminho da sua alma.
-                </p>
+              {/* Partículas flutuantes */}
+              <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+                {particles.map((p) => (
+                  <motion.div
+                    key={p.id}
+                    className="absolute rounded-full bg-amber-500/20 blur-[0.5px]"
+                    style={{
+                      width: p.size,
+                      height: p.size,
+                      left: `${p.x}%`,
+                      top: `${p.y}%`,
+                    }}
+                    animate={{
+                      y: ['110vh', '-10vh'],
+                      opacity: [0, 0.8, 0.8, 0],
+                    }}
+                    transition={{
+                      duration: p.duration,
+                      repeat: Infinity,
+                      delay: p.delay,
+                      ease: 'linear',
+                    }}
+                  />
+                ))}
               </div>
 
+              {/* Botão de Áudio */}
               <button
-                id="btn-start"
-                onClick={() => setStep(QuizStep.INPUT)}
-                className="w-full h-16 bg-gradient-to-r from-amber-500 to-amber-700 text-white font-black text-xl rounded-[2rem] transition-all flex items-center justify-center gap-3 shadow-2xl active:scale-95 group overflow-hidden relative"
+                onClick={toggleAudio}
+                className="absolute -top-12 right-0 z-50 p-3 bg-zinc-900/50 border border-zinc-800 rounded-full text-amber-500 hover:bg-amber-500/10 hover:border-amber-500/30 transition-all duration-300 pointer-events-auto shadow-lg backdrop-blur-sm"
+                title={isPlaying ? "Mutar frequência" : "Ativar frequência de cura (528Hz)"}
               >
-                <span className="relative z-10">Iniciar Jornada</span>
-                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                {isPlaying ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5 text-zinc-600" />}
               </button>
+
+              {/* Conteúdo da Headline e Botão (Alinhado à Esquerda para respirar) */}
+              <div className="z-10 mt-auto mb-16 w-full max-w-xl px-6 md:px-12 flex flex-col items-start text-left space-y-6">
+                <div className="space-y-3">
+                  <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight leading-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                    Descubra o Poder dos <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 animate-pulse drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]">
+                      Seus Números
+                    </span>
+                  </h1>
+                  <p className="text-zinc-300 text-base md:text-lg leading-relaxed max-w-md font-medium drop-shadow-[0_1px_5px_rgba(0,0,0,0.8)]">
+                    Conecte-se com a sabedoria ancestral da numerologia e desvende o caminho da sua alma.
+                  </p>
+                </div>
+
+                <button
+                  id="btn-start"
+                  onClick={() => setStep(QuizStep.INPUT)}
+                  className="w-full sm:w-auto px-12 h-16 bg-gradient-to-r from-amber-500 to-amber-700 text-white font-black text-xl rounded-2xl transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:shadow-[0_0_50px_rgba(245,158,11,0.5)] active:scale-95 group overflow-hidden relative"
+                >
+                  <span className="relative z-10">Iniciar Jornada</span>
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+                </button>
+              </div>
             </motion.div>
           )}
 
